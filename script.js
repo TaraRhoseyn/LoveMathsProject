@@ -28,11 +28,24 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+// we need to generate numbers from 1-25 for our game. Let's use the 'random' method from the 'math' object
+// by default the 'Math.random' generates a number from 0.0-0.1, so we need to times it by 25 in order to get a number from 1-25. Math.random() * 25. then Math.floor(Math.random() * 25). Then Math.floor(Math.random() * 25) + 1;
+// by default the math.random creates decimal numbers, eg 5.888, we need an 'intergar'(whole number)
+// Math.floor rounds down to the whole number, meaning the range is 0-24. so we need to add + 1.
+
 
 
 // Code to be executed when the user clicks a button
 
-function runGame() {}
+function runGame() {
+    // we need to generate numbers from 1-25 for our game. Let's use the 'random' method from the 'math' object
+    // by default the 'Math.random' generates a number from 0.0-0.1, so we need to times it by 25 in order to get a number from 1-25. Math.random() * 25. then Math.floor(Math.random() * 25). Then Math.floor(Math.random() * 25) + 1;
+    // by default the math.random creates decimal numbers, eg 5.888, we need an 'intergar'(whole number)
+    // Math.floor rounds down to the whole number, meaning the range is 0-24. so we need to add + 1.
+
+    let num1 = Math.floor(Math.random() * 25) + 1;
+    let num2 = Math.floor(Math.random() * 25) + 1;
+}
 
 function checkAnswer() {}
 
