@@ -22,10 +22,12 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 // below tells us what game type attribute we want to run, e.g. all the other buttons, multiply/subtract etc. We're setting the game type (variable) to the value of that HTML data-type attribute value, e.g. "multiply"
                 let gameType = this.getAttribute("data-type");
-                alert(`You clicked ${gameType}`); // when using ${} remember to use the backticks `` and not quotations ''
+                runGame(gameType);
             }
         });
     }
+
+    runGame("addition");
 });
 
 // we need to generate numbers from 1-25 for our game. Let's use the 'random' method from the 'math' object
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Code to be executed when the user clicks a button
 
-function runGame() {
+function runGame(gameType) { // we're passing the gameType into the function as an argument
     // we need to generate numbers from 1-25 for our game. Let's use the 'random' method from the 'math' object
     // by default the 'Math.random' generates a number from 0.0-0.1, so we need to times it by 25 in order to get a number from 1-25. Math.random() * 25. then Math.floor(Math.random() * 25). Then Math.floor(Math.random() * 25) + 1;
     // by default the math.random creates decimal numbers, eg 5.888, we need an 'intergar'(whole number)
@@ -45,6 +47,13 @@ function runGame() {
 
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
+
+    if (gameType === "addition") {
+        displayAdditionQuestion(num1, num2); //calling another function (see function below)
+    } else {
+        alert(`Unknown game type ${gameType}`);
+        throw `Unknown game type ${gameType}, aborting!`; //this is for console
+    }
 }
 
 function checkAnswer() {}
@@ -55,7 +64,9 @@ function incrementScore() {}
 
 function incrementWrongAnswer() {}
 
-function displayAdditionQuestion() {}
+function displayAdditionQuestion(operand1, operand2) {
+    
+}
  
 function displaySubtractQuestion() {}
 
