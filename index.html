@@ -14,16 +14,17 @@
         </h1>
         <div class="game-area">
             <div class="controls-area">
-                <button class="btn btn--big btn--green">
+                <!-- data-type below: HTML lets us set these custom attributes, but you must use 'data' before 'type' so HTML knows it's a custom attribute. This attribute will be used both as a label in JS -->
+                <button data-type="addition" class="btn btn--big btn--green">
                     <i class="fas fa-plus"></i>
                 </button>
-                <button class="btn btn--big btn--blue">
+                <button data-type="subtract" class="btn btn--big btn--blue">
                     <i class="fas fa-minus"></i>
                 </button>
-                <button class="btn btn--big btn--orange">
+                <button data-type="multiply" class="btn btn--big btn--orange">
                     <i class="fas fa-times"></i>
                 </button>
-                <button class="btn btn--big btn--red">
+                <button data-type="division" class="btn btn--big btn--red">
                     <i class="fas fa-divide"></i>
                 </button>
             </div>
@@ -35,7 +36,8 @@
                 <p class="answer-message">Enter Answer:</p> <!-- this is only for mobile -->
                 <input id="answer-box" type="number"> <!-- 'type' here means only numbers can be inputted -->
             </div>
-            <button class="btn btn--gray">Submit Answer</button>
+            <!-- we're adding a 'submit' data-type here for the purposes of event listening & tracking -->
+            <button data-type="submit" class="btn btn--gray">Submit Answer</button>
         </div>
         <div class="score-area">
             <p class="scores">Correct Answers: <span id="score">0</span></p>

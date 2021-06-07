@@ -111,8 +111,9 @@ body {
     transition: all 0.5s;
 }
 
+/* pseudo elements, eg '::after' need a double ::, whereas pseudo selectors, such as :active only need 1 : */
 .btn--big::after {
-    content: attr(data-type);
+    content: attr(data-type); /* this will form the labels for our buttons */
     font-size: 1rem;
     color: #445361;
     position: relative;
