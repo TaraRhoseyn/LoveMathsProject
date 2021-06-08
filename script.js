@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener("click", function() {
             // below checks if the value of the data-type attribute in 'button' variable items is strictly equal to 'submit'
             if (this.getAttribute("data-type") === "submit") { 
-                alert("You clicked Submit")
+                checkAnswer(); // calling the checkAnswer function.
             } else {
                 // below tells us what game type attribute we want to run, e.g. all the other buttons, multiply/subtract etc. We're setting the game type (variable) to the value of that HTML data-type attribute value, e.g. "multiply"
                 let gameType = this.getAttribute("data-type");
@@ -56,16 +56,75 @@ function runGame(gameType) { // we're passing the gameType into the function as 
     }
 }
 
-function checkAnswer() {}
+function checkAnswer() {
+     
+    // checks the answer against the first element in the returned calculateCorrectAnswer array (found in if statement of that function)
+    // puttting 'value' in line below bcos it's an input element
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    let calculatedAnswer = calculateCorrectAnswer(); // this means the variable 'calculatedAnswer' will return the answer of the calculateCorrectAnswer function, which will be an array
+    // the variable below is written in short hand. the '=' is just the JS operator for assigning value to a variable, whereas the '===' checks whether two things either side of it are equal. Shorthand for comparison. [0] means the first item in the array (the actual number, not the gametype)
+    // if userAnswer is equal to calculatedAnswer's first array isCorrect will return 'true'
+    let isCorrect = userAnswer === calculatedAnswer[0];
+    // below is shorthand for saying if isCorrect is TRUE run this code
+    if (isCorrect) {
+        alert("Hey! You got it right! :D");
+        incrementScore();
+    } else {
+        alert(`Awww... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+        incrementWrongAnswer();
+    }
 
-function calculateCorrectAnswer() {}
+    // this returns another game of the same gameType (basically resets it)
+    runGame(calculatedAnswer[1]);
 
-function incrementScore() {}
+}
 
-function incrementWrongAnswer() {}
+// Try and avoid creating global variables, try to write your variables within functions etc, because often our script isn't the only one being run on a webpage, it can interfer with other scripts.
+
+function calculateCorrectAnswer() {
+    
+
+    // Gets the operands (the numbers) and the operator (plus, minus etc) directly from the DOM
+    // parseInt below turns strings into integers (whole numbers). By default when JS gets data from the DOM it returns it as a string, but we need numbers.
+    let operand1 = parseInt(document.getElementById("operand1").innerText);
+    let operand2 = parseInt(document.getElementById("operand2").innerText);
+    let operator = document.getElementById("operator").innerText;
+
+    // We're determining which calculation to do based on which operator is used, e.g. if + operator is used = addition sum will take place
+
+    if (operator === "+") {
+        return [operand1 + operand2, "addition"];
+    } else {
+        alert(`Unimplemented operator ${operator}`);
+        throw `Unimplemented operator ${operator}, aborting!`;
+    }
+}
+
+function incrementScore() {
+
+    // gets the current score from the DOM and increments it 
+    // incrementScore() is called within checkAnswer()
+
+    let oldScore = parseInt(document.getElementById("score").innerText);
+    // this writes the score back to the DOM
+    document.getElementById("score").innerText = ++oldScore; // can also use 'oldScore + 1'
+
+}
+
+function incrementWrongAnswer() {
+
+    // gets the current tally of incorrect answers from the DOM and increments it
+    // incrementWrongAnswer() is called within checkAnswer()
+
+    let oldScore = parseInt(document.getElementById("incorrect").innerText);
+    document.getElementById("incorrect").innerText = ++oldScore; 
+}
 
 function displayAdditionQuestion(operand1, operand2) {
-    
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "+";
+
 }
  
 function displaySubtractQuestion() {}
