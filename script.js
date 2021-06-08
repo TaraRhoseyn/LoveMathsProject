@@ -27,6 +27,14 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    
+    // allows users to submit answer with 'enter' key
+    document.getElementById("answer-box").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            checkAnswer();
+        }
+    })
+
     runGame("addition");
 });
 
@@ -45,11 +53,19 @@ function runGame(gameType) { // we're passing the gameType into the function as 
     // by default the math.random creates decimal numbers, eg 5.888, we need an 'intergar'(whole number)
     // Math.floor rounds down to the whole number, meaning the range is 0-24. so we need to add + 1.
 
+    document.getElementById("answer-box").value = ""; // sets value to empty string so each time this function is called the box gets cleared, courtesy to user as it's annoying to take out each time
+    document.getElementById("answer-box").focus(); // each time this function is called the cursor will actually be on the answer box so we don't have to keep clicking on it, this is known as 'focus'
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
 
     if (gameType === "addition") {
         displayAdditionQuestion(num1, num2); //calling another function (see function below)
+    } else if (gameType === "multiply") {
+        displayMultiplyQuestion(num1, num2);
+    } else if (gameType === "subtract") {
+        displaySubtractQuestion(num1, num2);
+    } else if (gameType === "division") {
+        displayDivideQuestion(num1, num2);
     } else {
         alert(`Unknown game type ${gameType}`);
         throw `Unknown game type ${gameType}, aborting!`; //this is for console
@@ -93,7 +109,15 @@ function calculateCorrectAnswer() {
     // We're determining which calculation to do based on which operator is used, e.g. if + operator is used = addition sum will take place
 
     if (operator === "+") {
-        return [operand1 + operand2, "addition"];
+        return [operand1 + operand2, "addition"]; // returns array
+    } else if (operator === "x") {
+        return [operand1 * operand2, "multiply"]; // returns array
+    } else if (operator === "-") {
+        return [operand1 - operand2, "subtract"];
+    } else if (operator === "/") {
+        let divisionSum = operand1 / operand2;
+        let divisionSumRemainder = operand1 % operand2;
+        return divisionSum - divisionSumRemainder;
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}, aborting!`;
@@ -127,8 +151,22 @@ function displayAdditionQuestion(operand1, operand2) {
 
 }
  
-function displaySubtractQuestion() {}
+function displaySubtractQuestion(operand1, operand2) {
+    // needs more thought to avoid producing minus numbers
+    // the below line works exactly like an 'if' statement but it's in shorthand, makes the larger operand operand1, whichever larger number will always be the first operand, takes away any chance of a minus number.
+    document.getElementById("operand1").textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById("operand2").textContent = operand1 > operand2 ? operand2 : operand1;
+    document.getElementById("operator").textContent = "-";
+}
 
-function displayMultiplyQuestion() {}
+function displayMultiplyQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "x";
+}
 
-function displayDivideQuestion() {}
+function displayDivideQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById("operand2").textContent = operand1 > operand2 ? operand2 : operand1;
+    document.getElementById("operator").textContent = "/";
+}
